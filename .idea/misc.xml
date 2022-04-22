@@ -4,8 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Tyler/Desktop/Other/AndroidPrograms/CarFaxApp/app/src/main/res/layout/activity_main.xml" value="0.38924930491195553" />
+        <entry key="..\:/Users/Tyler/Desktop/Other/AndroidPrograms/CarFaxApp/app/src/main/res/layout/landing_page_activity.xml" value="0.1" />
         <entry key="..\:/Users/Tyler/Desktop/Other/AndroidPrograms/CarFaxApp/app/src/main/res/layout/landing_page_fragment.xml" value="0.33" />
-        <entry key="..\:/Users/Tyler/Desktop/Other/AndroidPrograms/CarFaxApp/app/src/main/res/layout/layout_car_list_item.xml" value="0.33" />
+        <entry key="..\:/Users/Tyler/Desktop/Other/AndroidPrograms/CarFaxApp/app/src/main/res/layout/layout_car_list_item.xml" value="0.5" />
       </map>
     </option>
   </component>

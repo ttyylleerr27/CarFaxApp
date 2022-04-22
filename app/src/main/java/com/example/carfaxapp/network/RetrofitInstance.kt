@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class RetrofitInstance {
     companion object{
-        private const val baseURL = "https://carfax-for-consumers.firebaseio.com/"
+        val baseURL = "https://carfax-for-consumers.firebaseio.com/"
 
         fun getRetrofitInstance(): Retrofit {
             return Retrofit.Builder()

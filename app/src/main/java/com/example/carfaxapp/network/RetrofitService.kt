@@ -4,6 +4,6 @@ import io.reactivex.Observable
 import retrofit2.http.GET
 
 interface RetrofitService {
-    @GET("assignment.json")
+    @GET("assignment.json/")
     fun getCarListFromApi(): Observable<CarListModel>
 }

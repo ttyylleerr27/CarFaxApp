@@ -3,37 +3,47 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/route_list"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:backgroundTint="@color/white"
     android:elevation="6dp"
     app:cardCornerRadius="4dp"
-    app:strokeColor="#B9CDEA"
     app:strokeWidth="2dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/carImageView"
-            android:layout_width="0dp"
-            android:layout_height="200dp"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:adjustViewBounds="false"
+            android:cropToPadding="false"
             android:scaleType="fitXY"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/avatars" />
+            tools:srcCompat="@drawable/coming_soon_image" />
 
         <TextView
-            android:id="@+id/carInfo"
+            android:id="@+id/carMake"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:text="CarInfo"
+            android:text="Make"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/carImageView" />
+
+        <TextView
+            android:id="@+id/carModel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:text="Model"
+            app:layout_constraintStart_toEndOf="@+id/carMake"
             app:layout_constraintTop_toBottomOf="@+id/carImageView" />
 
         <TextView
@@ -41,10 +51,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="CarPrice   | "
+            android:text="Price"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/carInfo">
-        </TextView>
+            app:layout_constraintTop_toBottomOf="@id/carMileage" />
+
 
         <TextView
             android:id="@+id/carMileage"
@@ -52,9 +62,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:text="Mileage"
-            app:layout_constraintStart_toEndOf="@id/carPrice"
-            app:layout_constraintTop_toBottomOf="@+id/carInfo">
-        </TextView>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/carMake"/>
 
         <TextView
             android:id="@+id/carLocation"
@@ -63,13 +72,15 @@
             android:layout_marginStart="16dp"
             android:text="Location"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/carMileage">
+            app:layout_constraintTop_toBottomOf="@+id/carPrice">
         </TextView>
 
         <Button
             android:id="@+id/callDealerButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:text="Call Dealer"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
