@@ -3,10 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/landingPageActivity">
-    <activity
-        android:id="@+id/landingPageActivity"
-        android:name="com.example.carfaxapp.LandingPageActivity"
+    app:startDestination="@id/landingPageFragment">
+    <fragment
+        android:id="@+id/landingPageFragment"
+        android:name="com.example.carfaxapp.fragments.LandingPageFragment"
         android:label="landing_page_fragment"
-        tools:layout="@layout/landing_page_activity" />
+        tools:layout="@layout/landing_page_fragment">
+        <action
+            android:id="@+id/action_landingPageFragment_to_detailedListingFragment"
+            app:destination="@id/detailedListingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailedListingFragment"
+        android:name="com.example.carfaxapp.fragments.DetailedListingFragment"
+        android:label="DetailedListingFragment" >
+        <argument
+            android:name="listing"
+            app:argType="com.example.carfaxapp.network.ListInfo" />
+    </fragment>
 </navigation>
