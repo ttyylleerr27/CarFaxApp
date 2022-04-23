@@ -38,12 +38,6 @@ class LandingPageFragment : Fragment(), Listener {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        //nav graph stuff
-    }
-
     private fun initRecyclerView(){
         binding.carListRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
