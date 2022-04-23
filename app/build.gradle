@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id("kotlin-parcelize")
     id("androidx.navigation.safeargs")
+    id 'kotlin-kapt'
 }
 
 android {
@@ -63,8 +64,10 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
 
     //RoomDB
+    implementation 'android.arch.lifecycle:extensions:1.1.1'
+    kapt 'android.arch.lifecycle:compiler:1.1.1'
     implementation 'androidx.room:room-runtime:2.4.2'
-    annotationProcessor 'androidx.room:room-compiler:2.4.2'
+    kapt 'androidx.room:room-compiler:2.4.2'
     implementation 'androidx.room:room-rxjava2:2.4.2'
 
 }

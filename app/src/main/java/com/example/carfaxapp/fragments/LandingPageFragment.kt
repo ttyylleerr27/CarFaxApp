@@ -1,6 +1,7 @@
 package com.example.carfaxapp.fragments
 
 import android.annotation.SuppressLint
+import android.app.Application
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -16,8 +17,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.carfaxapp.adapters.CarListAdapter
 import com.example.carfaxapp.adapters.Listener
+import com.example.carfaxapp.database.CarListDatabase
 import com.example.carfaxapp.databinding.LandingPageFragmentBinding
 import com.example.carfaxapp.network.CarListModel
+import com.example.carfaxapp.network.ListInfo
 import com.example.carfaxapp.viewmodels.LandingPageViewModel
 
 class LandingPageFragment : Fragment(), Listener {
@@ -34,6 +37,8 @@ class LandingPageFragment : Fragment(), Listener {
         _binding = LandingPageFragmentBinding.inflate(inflater, container, false)
 
         loadApi()
+        val database = CarListDatabase.getInstance(binding.root.context)
+        viewModel.setInstanceOfDatabase(database)
         initRecyclerView()
         return binding.root
     }
@@ -51,10 +56,11 @@ class LandingPageFragment : Fragment(), Listener {
         viewModel = ViewModelProvider(this).get(LandingPageViewModel::class.java)
         viewModel.getCarListObserver().observe(this, Observer<CarListModel>{
             if(it != null){
-                carListAdapter.carListing = it.listings
+                carListAdapter.carListing = it.listings as ArrayList<ListInfo>
+                viewModel.saveDataIntoDb(it)
                 carListAdapter.notifyDataSetChanged()
             }else{
-                Toast.makeText(context, "Error in fetching data", Toast.LENGTH_SHORT).show()
+                viewModel.getDataFromDb()
             }
         })
         viewModel.makeApiCalls()

@@ -4,34 +4,30 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.example.carfaxapp.network.CarListModel
 
-@Database(entities = [CarListModel::class], version = 1, exportSchema = false)
+@Database(entities = [CarListModel::class], version = 2, exportSchema = false)
+@TypeConverters(TypeConverter::class)
 abstract class CarListDatabase : RoomDatabase() {
-
-    abstract val carListDao: CarListDao
+    abstract fun carListDao(): CarListDao
 
     companion object {
 
         @Volatile
         private var INSTANCE: CarListDatabase? = null
 
-        fun getInstance(context: Context): CarListDatabase {
-            synchronized(this){
-                var instance = INSTANCE
-
-                if(instance == null){
-                    instance = Room.databaseBuilder(
-                        context.applicationContext,
-                        CarListDatabase::class.java,
-                        "car_list_database"
-                    )
-                        .fallbackToDestructiveMigration()
-                        .build()
-                    INSTANCE = instance
+        fun getInstance(context: Context): CarListDatabase =
+            INSTANCE ?: synchronized(this)
+            {
+                INSTANCE ?: buildInstance(context).also{
+                    INSTANCE = it
                 }
-                return instance
-            }
         }
+
+        private fun buildInstance(context: Context) =
+            Room.databaseBuilder(context, CarListDatabase::class.java, "CarListDB")
+                .fallbackToDestructiveMigration()
+                .build()
     }
 }
