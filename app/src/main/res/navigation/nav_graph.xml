@@ -8,5 +8,21 @@
         android:id="@+id/landingPageFragment"
         android:name="com.example.carfaxapp.fragments.LandingPageFragment"
         android:label="landing_page_fragment"
-        tools:layout="@layout/landing_page_fragment" />
+        tools:layout="@layout/landing_page_fragment">
+        <action
+            android:id="@+id/action_landingPageFragment_to_detailedListingFragment"
+            app:destination="@id/detailedListingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailedListingFragment"
+        android:name="com.example.carfaxapp.fragments.DetailedListingFragment"
+        android:label="DetailedListingFragment"
+        tools:layout="@layout/detailed_listing_fragment">
+        <argument
+            android:name="listing"
+            app:argType="com.example.carfaxapp.network.ListInfo" />
+        <action
+            android:id="@+id/action_detailedListingFragment_to_landingPageFragment2"
+            app:destination="@id/landingPageFragment" />
+    </fragment>
 </navigation>
