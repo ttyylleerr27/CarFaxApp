@@ -6,21 +6,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
-import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.carfaxapp.R
 import com.example.carfaxapp.databinding.DetailedListingFragmentBinding
-import com.example.carfaxapp.network.CarListModel
-import com.example.carfaxapp.network.ListInfo
-import com.example.carfaxapp.viewmodels.LandingPageViewModel
 import java.text.DecimalFormat
-import java.util.*
 
 class DetailedListingFragment : Fragment(R.layout.detailed_listing_fragment) {
 
@@ -36,13 +30,21 @@ class DetailedListingFragment : Fragment(R.layout.detailed_listing_fragment) {
         _binding = DetailedListingFragmentBinding.inflate(inflater, container, false)
 
         initUI()
+        onBackPressed()
         return binding.root
     }
 
     private fun initUI(){
+        //Format the price of the car
         val decimalFormat = DecimalFormat("$##,###")
+
         args.listing.let{
             val url = it.images.firstPhoto.large
+
+            /*
+            If statement for looking to see if the url starts with carfax. If it does load in a coming soon picture.
+            I had noticed all urls starting with this had no visible picture linked to it, so I came up with this solution.
+             */
             if(url.startsWith("https://carfax-img.vast.com")){
                 binding.carImageView2.setImageDrawable(ContextCompat.getDrawable(binding.root.context, R.drawable.coming_soon_image))
             }else{
@@ -66,13 +68,31 @@ class DetailedListingFragment : Fragment(R.layout.detailed_listing_fragment) {
 
             callDealer(it.dealer.phone)
         }
+
     }
 
     private fun callDealer(phoneNumber: String){
         binding.callDealerButton.setOnClickListener {
-            val callIntent = Intent(Intent.ACTION_DIAL)
-            callIntent.data = Uri.parse("tel:$phoneNumber")
+            val callIntent = Intent(Intent.ACTION_DIAL).apply {
+                data = Uri.parse("tel:$phoneNumber")
+            }
             startActivity(callIntent)
         }
+    }
+
+    /**
+     * Custom onBackPressed to always go back to the landing page fragment.
+     * Otherwise, when a dial intent was clicked on in the landing page, the back button would always go back to that dial intent.
+     * This way creates a new landing page fragment instance which loses its state of location on the recycler view; however, this
+     * was the only viable solution I could come up with in the time I have.
+     */
+    private fun onBackPressed(){
+        requireActivity()
+            .onBackPressedDispatcher
+            .addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    findNavController().navigate(R.id.action_detailedListingFragment_to_landingPageFragment2)
+                }
+            })
     }
 }

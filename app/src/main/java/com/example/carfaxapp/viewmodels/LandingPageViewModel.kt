@@ -1,5 +1,7 @@
 package com.example.carfaxapp.viewmodels
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.carfaxapp.database.CarListDatabase
@@ -14,14 +16,18 @@ import io.reactivex.schedulers.Schedulers
 
 class LandingPageViewModel: ViewModel() {
 
-    protected val compositeDisposable = CompositeDisposable()
+    private val compositeDisposable = CompositeDisposable()
     private var database: CarListDatabase ?= null
     var carList: MutableLiveData<CarListModel> = MutableLiveData()
 
+    // Set instance of database
     fun setInstanceOfDatabase(database: CarListDatabase){
         this.database = database
     }
 
+    /**
+     * Saves current data into database in preparation for offline usage.
+     */
     fun saveDataIntoDb(data: CarListModel){
         database?.carListDao()?.insertCarList(data)
             ?.subscribeOn(Schedulers.io())
@@ -33,6 +39,9 @@ class LandingPageViewModel: ViewModel() {
             }
     }
 
+    /**
+     * Gets the data that was saved into the database for offline usage.
+     */
     fun getDataFromDb(){
         database?.carListDao()?.getList()
             ?.subscribeOn(Schedulers.io())
@@ -55,6 +64,9 @@ class LandingPageViewModel: ViewModel() {
         return carList
     }
 
+    /**
+     * Utilize retrofit to obtain api data
+     */
     fun makeApiCalls(){
         val retrofitInstance = RetrofitInstance.getRetrofitInstance().create(RetrofitService::class.java)
         retrofitInstance.getCarListFromApi()
@@ -63,6 +75,9 @@ class LandingPageViewModel: ViewModel() {
             .subscribe(getCarListObserverRx())
     }
 
+    /**
+     * RxJava observer setup
+     */
     private fun getCarListObserverRx(): Observer<CarListModel> {
         return object: Observer<CarListModel> {
             override fun onSubscribe(d: Disposable) {
@@ -78,7 +93,7 @@ class LandingPageViewModel: ViewModel() {
             }
 
             override fun onComplete() {
-
+                Log.d(TAG, "Observation complete")
             }
         }
     }

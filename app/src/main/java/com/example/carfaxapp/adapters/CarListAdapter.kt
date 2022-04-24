@@ -3,7 +3,6 @@ package com.example.carfaxapp.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -11,8 +10,6 @@ import com.example.carfaxapp.R
 import com.example.carfaxapp.databinding.LayoutCarListItemBinding
 import com.example.carfaxapp.network.ListInfo
 import java.text.DecimalFormat
-import kotlin.math.ln
-import kotlin.math.pow
 
 /**
  * Adapter responsible for loading and displaying a list of cars.
@@ -61,6 +58,11 @@ class CarListAdapter(private val listener: Listener): RecyclerView.Adapter<CarLi
             itemView.setOnClickListener(this)
 
             val url = data.images.firstPhoto.large
+
+            /*
+            If statement for looking to see if the url starts with carfax. If it does load in a coming soon picture.
+            I had noticed all urls starting with this had no visible picture linked to it, so I came up with this solution.
+            */
             if(url.startsWith("https://carfax-img.vast.com")){
                 image.setImageDrawable(ContextCompat.getDrawable(binding.root.context, R.drawable.coming_soon_image))
             }else{
@@ -71,6 +73,9 @@ class CarListAdapter(private val listener: Listener): RecyclerView.Adapter<CarLi
             }
         }
 
+        /**
+         * onClick for call button and each car listed on the recycler view's list
+         */
         override fun onClick(view: View?){
             if(view?.id == R.id.callDealerButton) {
                 listener.onCallButtonClicked(adapterPosition)

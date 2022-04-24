@@ -16,9 +16,13 @@
     <fragment
         android:id="@+id/detailedListingFragment"
         android:name="com.example.carfaxapp.fragments.DetailedListingFragment"
-        android:label="DetailedListingFragment" >
+        android:label="DetailedListingFragment"
+        tools:layout="@layout/detailed_listing_fragment">
         <argument
             android:name="listing"
             app:argType="com.example.carfaxapp.network.ListInfo" />
+        <action
+            android:id="@+id/action_detailedListingFragment_to_landingPageFragment2"
+            app:destination="@id/landingPageFragment" />
     </fragment>
 </navigation>
