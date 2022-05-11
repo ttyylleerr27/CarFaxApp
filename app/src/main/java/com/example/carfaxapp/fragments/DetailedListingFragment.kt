@@ -30,7 +30,7 @@ class DetailedListingFragment : Fragment(R.layout.detailed_listing_fragment) {
         _binding = DetailedListingFragmentBinding.inflate(inflater, container, false)
 
         initUI()
-        onBackPressed()
+        //onBackPressed()
         return binding.root
     }
 
@@ -80,19 +80,19 @@ class DetailedListingFragment : Fragment(R.layout.detailed_listing_fragment) {
         }
     }
 
-    /**
-     * Custom onBackPressed to always go back to the landing page fragment.
-     * Otherwise, when a dial intent was clicked on in the landing page, the back button would always go back to that dial intent.
-     * This way creates a new landing page fragment instance which loses its state of location on the recycler view; however, this
-     * was the only viable solution I could come up with in the time I have.
-     */
-    private fun onBackPressed(){
-        requireActivity()
-            .onBackPressedDispatcher
-            .addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    findNavController().navigate(R.id.action_detailedListingFragment_to_landingPageFragment2)
-                }
-            })
-    }
+//    /**
+//     * Custom onBackPressed to always go back to the landing page fragment.
+//     * Otherwise, when a dial intent was clicked on in the landing page, the back button would always go back to that dial intent.
+//     * This way creates a new landing page fragment instance which loses its state of location on the recycler view; however, this
+//     * was the only viable solution I could come up with in the time I have.
+//     */
+//    private fun onBackPressed(){
+//        requireActivity()
+//            .onBackPressedDispatcher
+//            .addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+//                override fun handleOnBackPressed() {
+//                    findNavController().navigate(R.id.action_detailedListingFragment_to_landingPageFragment2)
+//                }
+//            })
+//    }
 }
